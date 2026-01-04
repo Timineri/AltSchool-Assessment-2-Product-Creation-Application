@@ -30,29 +30,32 @@ function ProductsWithoutLibrary() {
         price: Number(product.price)
       })
     })
-    .then(res => res.json())
-    .then(data => {
-      console.log('Product crested:', data);
-    })
-    .catch(err => {
-      console.error("Error:", err)
-    })
-  
+      .then(res => res.json())
+      .then(data => {
+        console.log('Created Product Successfully:', data);
+
+
+      })
+      .catch(err => {
+        console.error("Error:", err)
+      })
+
   }
 
   const validate = () => {
     const newErrors = {};
 
-    if (!product.name) newErrors.name = 'Name is required';
+    if (!product.name) newErrors.name = 'Please Input your name';
+    if (!product.category) newErrors.category = 'Please input your category';
     if (!product.price || product.price <= 0)
-      newErrors.price = 'Price must be greater than 0';
-    if (!product.category) newErrors.category = 'Category is required';
+      newErrors.price = 'Let your price be greater than 0';
+
 
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0;
   }
 
- 
+
 
   return (
     <div>
@@ -60,8 +63,11 @@ function ProductsWithoutLibrary() {
       <form onSubmit={handleSubmit}>
         <p>Without Library</p>
         <input type="text" name='name' value={product.name} onChange={handleChange} placeholder="Product Name" />
+        {errors && <p style={{ color: 'red' }}>{errors.name}</p>}
         <input type="number" name='price' value={product.price} onChange={handleChange} placeholder="Price" />
+        {errors && <p style={{ color: 'red' }}>{errors.price}</p>}
         <input type="text" name='category' value={product.category} onChange={handleChange} placeholder="Category" />
+        {errors && <p style={{ color: 'red' }}>{errors.category}</p>}
         <textarea name='description' value={product.description} onChange={handleChange} placeholder="Description"></textarea>
         <input type="checkbox" name='instock' checked={product.instock} onChange={handleChange} /> In Stock
         <button>Create Product</button>
